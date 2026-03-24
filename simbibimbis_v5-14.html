@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simbibimbis – The Good Staff</title>
+<style>
+  :root {
+    --cream: #f7f2e8;
+    --dark: #1e1a14;
+    --amber: #D4873A;
+    --muted: #7a6a52;
+    --red: #a0624a;
+    --light: #f0ead8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--dark); font-family: Georgia, serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 48px;
+    background: rgba(247,242,232,0.95);
+    border-bottom: 1px solid rgba(30,26,20,0.08);
+  }
+  .nav-logo { font-size: 1.2rem; font-weight: bold; color: var(--dark); text-decoration: none; letter-spacing: 0.05em; }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover { color: var(--dark); }
+  .nav-cta { background: var(--dark); color: var(--cream) !important; padding: 9px 20px; border-radius: 2px; }
+  .nav-cta:hover { background: var(--amber) !important; color: var(--dark) !important; }
+
+  .lang-switcher { display: flex; border: 1px solid rgba(30,26,20,0.2); border-radius: 2px; overflow: hidden; }
+  .lang-btn { background: none; border: none; padding: 7px 13px; font-size: 0.75rem; letter-spacing: 0.1em; cursor: pointer; color: var(--muted); font-family: Georgia, serif; }
+  .lang-btn.active { background: var(--dark); color: var(--cream); }
+  .lang-sep { width: 1px; background: rgba(30,26,20,0.2); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 70px; }
+  .hero-text { display: flex; flex-direction: column; justify-content: center; padding: 80px 48px 80px 72px; }
+  .eyebrow { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; }
+  .hero-title { font-size: clamp(2.4rem, 4vw, 3.8rem); line-height: 1.1; margin-bottom: 24px; }
+  .hero-title em { font-style: italic; color: var(--amber); }
+  .hero-sub { font-size: 1rem; line-height: 1.8; color: var(--muted); max-width: 420px; margin-bottom: 40px; }
+  .hero-btns { display: flex; gap: 16px; align-items: center; }
+  .btn { display: inline-block; background: var(--dark); color: var(--cream); padding: 14px 32px; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border-radius: 2px; font-family: Georgia, serif; cursor: pointer; border: none; }
+  .btn:hover { background: var(--amber); color: var(--dark); }
+  .btn-link { color: var(--muted); font-size: 0.85rem; text-decoration: none; border-bottom: 1px solid var(--muted); padding-bottom: 2px; }
+  .badge { margin-top: 32px; display: inline-flex; align-items: center; gap: 8px; background: rgba(201,64,64,0.08); border: 1px solid rgba(201,64,64,0.25); border-radius: 40px; padding: 9px 18px; font-size: 0.78rem; color: var(--red); width: fit-content; }
+
+  .hero-visual { display: flex; align-items: center; justify-content: center; padding: 48px; background: radial-gradient(ellipse at center, rgba(212,135,58,0.07) 0%, transparent 70%); }
+
+  /* SECTIONS */
+  section { padding: 100px 72px; }
+  .sec-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 14px; }
+  .sec-title { font-size: clamp(1.8rem, 2.5vw, 2.6rem); line-height: 1.2; margin-bottom: 32px; }
+  .sec-title em { font-style: italic; color: var(--amber); }
+  .body-text { font-size: 0.95rem; line-height: 1.85; color: var(--muted); margin-bottom: 18px; }
+
+  /* STORY */
+  .story { background: var(--dark); color: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .story .sec-label { color: var(--amber); }
+  .story .sec-title { color: var(--cream); }
+  .story .body-text { color: rgba(247,242,232,0.72); }
+  .story-circle { width: 320px; height: 320px; border-radius: 50%; background: rgba(212,135,58,0.1); border: 1px solid rgba(212,135,58,0.25); display: flex; align-items: center; justify-content: center; font-size: 7rem; margin: 0 auto; }
+
+  /* VALUES */
+  .values { text-align: center; }
+  .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; max-width: 1100px; margin: 0 auto; }
+  .val-card { padding: 36px 20px; border: 1px solid rgba(30,26,20,0.08); border-radius: 4px; background: white; transition: all 0.3s; }
+  .val-card:hover { border-color: var(--amber); transform: translateY(-4px); box-shadow: 0 10px 32px rgba(212,135,58,0.1); }
+  .val-icon { font-size: 2.2rem; margin-bottom: 16px; }
+  .val-title { font-size: 1rem; font-weight: bold; margin-bottom: 10px; }
+  .val-text { font-size: 0.85rem; line-height: 1.7; color: var(--muted); }
+
+  /* PRODUCT */
+  .product { background: var(--light); }
+  .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .tag { background: var(--cream); border: 1px solid rgba(30,26,20,0.12); border-radius: 40px; padding: 5px 14px; font-size: 0.78rem; color: var(--muted); }
+  .price-row { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
+  .price { font-size: 2rem; font-weight: bold; }
+  .price-note { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+  /* RESCUE */
+  .rescue { background: var(--red); color: white; text-align: center; }
+  .rescue .sec-label { color: rgba(255,255,255,0.6); }
+  .rescue-title { font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 20px; }
+  .rescue-sub { font-size: 1rem; line-height: 1.8; opacity: 0.85; max-width: 580px; margin: 0 auto 52px; }
+  .rescue-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 880px; margin: 0 auto; }
+  .rescue-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 28px 20px; }
+  .rc-icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .rc-title { font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
+  .rc-text { font-size: 0.83rem; opacity: 0.82; line-height: 1.65; }
+
+  /* SUSTAIN */
+  .sustain { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .sustain-list { display: flex; flex-direction: column; gap: 28px; }
+  .si { display: flex; gap: 16px; align-items: flex-start; }
+  .si-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(212,135,58,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .si-title { font-weight: bold; margin-bottom: 6px; font-size: 0.95rem; }
+  .si-text { font-size: 0.87rem; line-height: 1.7; color: var(--muted); }
+  .sustain-visual { display: flex; justify-content: center; }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: rgba(247,242,232,0.5); padding: 56px 72px; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 56px; }
+  .f-brand { font-size: 1.3rem; font-weight: bold; color: var(--cream); margin-bottom: 12px; }
+  .f-tagline { font-style: italic; font-size: 0.88rem; line-height: 1.7; max-width: 260px; }
+  .f-head { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; }
+  .f-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .f-links a { color: rgba(247,242,232,0.5); text-decoration: none; font-size: 0.88rem; }
+  .f-links a:hover { color: var(--cream); }
+  .f-bottom { background: var(--dark); border-top: 1px solid rgba(247,242,232,0.08); padding: 18px 72px; display: flex; justify-content: space-between; font-size: 0.76rem; color: rgba(247,242,232,0.3); }
+
+  @media (max-width: 860px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero, .story, .product-grid, .sustain { grid-template-columns: 1fr; }
+    section { padding: 72px 20px; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .rescue-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; padding: 40px 20px; }
+    .f-bottom { padding: 16px 20px; flex-direction: column; gap: 6px; }
+    .hero-text { padding: 40px 20px; }
+    .hero-visual { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo"><img src="logo.png" alt="Simbibimbis" style="height:44px;width:auto;display:block;"></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#produkt" id="nav-produkter">Produkter</a></li>
+      <li><a href="#story" id="nav-historia">Vår historia</a></li>
+      <li><a href="#rescue" id="nav-rescue">Rescue</a></li>
+      <li><a href="#hallbarhet" id="nav-hallbarhet">Hållbarhet</a></li>
+      <li><a href="#produkt" class="nav-cta" id="nav-handla">Handla nu</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn" id="btn-sv">SV</button>
+      <div class="lang-sep"></div>
+      <button class="lang-btn active" id="btn-en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="eyebrow" id="hero-eyebrow">Handmade in Stockholm &middot; Plant-based &middot; 100% Good Staff</p>
+    <h1 class="hero-title" id="hero-title"><em>Treat your dog<br>with kindness.</em></h1>
+    <p class="hero-sub" id="hero-sub">Plant-based dog treats – handmade in Stockholm.</p>
+    <div class="hero-btns">
+      <a href="#produkt" class="btn" id="hero-btn1">Shop The Good Staff</a>
+      <a href="#story" class="btn-link" id="hero-btn2">Our story</a>
+    </div>
+    <div class="badge">
+      <span>&#9825;</span>
+      <span id="hero-badge">5 SEK per bag goes to rescue organisations</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="logo.png" alt="Simbibimbis logo" style="width:340px;height:340px;object-fit:contain;"/>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div>
+    <p class="sec-label" id="story-label">Vår historia</p>
+    <h2 class="sec-title" id="story-title">Det började med<br><em>en liten strandhund</em></h2>
+    <p class="body-text" id="story-p1">Angelica mötte henne i Goa, Indien – en liten gathund som togs om hand av ett lokalt djurskydd. Hon kallade henne Lillstrumpa. Hon kunde inte ta med henne hem, och det krossade hennes hjärta. Så hon lovade sig själv att försöka göra så mycket hon kan för att hjälpa rescuehundar.</p>
+    <p class="body-text" id="story-p2">År senare träffade hon Niki. De insåg snabbt att de båda var vegetarianer som delade kärleken till hundar – och framför allt rescuehundar. De bestämde sig snart för att de ville adoptera en hund tillsammans.</p>
+    <p class="body-text" id="story-p2b">På Alla hjärtans dag, sex månader efter att Angelica och Niki träffades, fick de samtalet: de hade blivit utvalda att adoptera en sex månader gammal valp. Och på något sätt föll allt på plats. De döpte om honom till Simba – deras lilla lejon, deras hjärta.</p>
+    <p class="body-text" id="story-p2c">Niki bidrar med sin egen kreativitet i allt han gör. Tillsammans är de ett team byggt på kärlek, musik, matlagning och en gemensam övertygelse om att omtanke spelar roll. Och Simba? Alltid med dem – helst i en soffa eller på en stol bredvid.</p>
+    <p class="body-text" id="story-p4">Simbibimbis är resultatet av den gemensamma övertygelsen. Ett varumärke byggt på kärlek till hundar, hållbara val och viljan att göra verklig skillnad – en påse i taget. Och det är därför Simbibimbis finns.</p>
+  </div>
+  <div style="display:flex;justify-content:center;">
+    <div class="story-circle" style="overflow:hidden; background:none;"><img src="" alt="Simba" style="width:100%; height:100%; object-fit:cover; border-radius:50%;"></div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="product" id="produkt">
+  <div class="product-grid">
+    <div>
+      <p class="sec-label" id="prod-label">Produkter</p>
+      <h2 class="sec-title" id="prod-title" style="margin-bottom:20px;">The Good Staff<br><em>Gentle Hearts</em></h2>
+      <p class="body-text" id="prod-desc">The Good Staff är ett växtbaserat, hypoallergent hundgodis framtaget för vardagsnjutning – och särskilt lämpligt för hundar med känslig mage eller allergi mot animaliska proteiner.<br><br>Som komplement till din hunds vanliga kost erbjuder det ett skonsamt och näringsrikt alternativ. Naturligt rikt på fiber och antioxidanter – för en balanserad och hälsosam livsstil.<br><br>Och viktigast av allt: hundarna älskar det. Simba äter inte uteslutande växtbaserat, men han älskar The Good Staff. Det är för oss det bästa beviset på att produkten håller vad den lovar.</p>
+      <div class="tags">
+        <span class="tag" id="ing1">Havre</span>
+        <span class="tag" id="ing2">Kikärtsmjöl</span>
+        <span class="tag" id="ing3">Jordnötssmör</span>
+        <span class="tag" id="ing4">Kokosolja</span>
+        <span class="tag" id="ing5">Naturliga smakgivare</span>
+        <span class="tag">Handmade in Stockholm</span>
+        <span class="tag" id="tag-hypo">Hypoallergent</span>
+      </div>
+      <div class="price-row">
+        <span class="price">109 kr</span>
+        <span class="price-note" id="prod-price-note">80g &middot; inkl. moms<br>Frakt tillkommer</span>
+      </div>
+      <a href="#" class="btn" id="prod-btn">Lägg i varukorg</a>
+      <p class="body-text" id="amstaff-note" style="margin-top:24px; font-size:0.9rem; font-style:italic; opacity:0.8;">Simba är en amstaff-blandning – en ras som ofta missförstås och behandlas orättvist – men när de möts med kärlek och omsorg visar de upp något alldeles extraordinärt. Det är därför produktlinjen heter The Good Staff – för det är precis vad de är.</p>
+    </div>
+    <div style="display:flex;justify-content:center;align-items:center;">
+      <img src="" alt="Simba" style="width:280px; border-radius:8px;">
+    </div>
+  </div>
+</section>
+
+
+<section class="values" id="hallbarhet">
+  <p class="sec-label" id="val-label">Varför Simbibimbis</p>
+  <h2 class="sec-title" id="val-title">Mer än bara hundgodis</h2>
+  <div class="values-grid">
+    <div class="val-card">
+      <div class="val-icon">🌿</div>
+      <h3 class="val-title" id="v1-title">100% växtbaserat</h3>
+      <p class="val-text" id="v1-text">Inga animaliska ingredienser. Godis som är bra för din hund och i linje med ett mer hållbart val.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">🇸🇪</div>
+      <h3 class="val-title" id="v2-title">Handgjort i Stockholm</h3>
+      <p class="val-text" id="v2-text">Små batcher, noggrant utvalda ingredienser och full kontroll över hela processen.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">🌊</div>
+      <h3 class="val-title" id="v3-title">Hållbara råvaror</h3>
+      <p class="val-text" id="v3-text">Vi utforskar ingredienser som kelp – nyttigt för hundar och bra för haven – och räddade äpplen som annars skulle gå till spillo.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">&#9825;</div>
+      <h3 class="val-title" id="v4-title">Ger tillbaka</h3>
+      <p class="val-text" id="v4-text">5 kronor från varje såld påse går direkt till rescueorganisationer. Varje köp gör skillnad på riktigt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESCUE -->
+<section class="rescue" id="rescue">
+  <p class="sec-label" id="resc-label">Rescue-engagemang</p>
+  <h2 class="rescue-title" id="resc-title">Rescue<br><em>Friends Club</em></h2>
+  <p class="rescue-sub" id="resc-sub">Varje månad lyfter vi fram en rescuehund – antingen en som redan hittat sitt forever home, eller en som fortfarande väntar. Vi berättar deras historia och donationen går direkt till organisationen bakom.</p>
+  <div class="rescue-grid">
+    <div class="rescue-card">
+      <div class="rc-icon">🐕</div>
+      <h3 class="rc-title" id="rc1-title">En hund. En historia.</h3>
+      <p class="rc-text" id="rc1-text">Vi presenterar en rescuehund med en positiv historia – en hund som klarade det och hittade sitt för alltid-hem.</p>
+    </div>
+    <div class="rescue-card">
+      <div class="rc-icon">&#9825;</div>
+      <h3 class="rc-title" id="rc2-title">5 kr per påse</h3>
+      <p class="rc-text" id="rc2-text">5 kr per såld påse går direkt till den organisation som räddade den hunden – och som fortsätter kämpa för de hundar som väntar.</p>
+    </div>
+    <div class="rescue-card">
+      <div class="rc-icon">🤝</div>
+      <h3 class="rc-title" id="rc3-title">Köp med mening</h3>
+      <p class="rc-text" id="rc3-text">Varje påse du köper är ett direkt bidrag till en verklig organisation och en verklig historia. Inte diffus välgörenhet – utan ett konkret och positivt bidrag.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SUSTAIN -->
+<section class="sustain">
+  <div>
+    <p class="sec-label" id="sust-label">Hållbarhet</p>
+    <h2 class="sec-title" id="sust-title">Varje val har ett syfte</h2>
+    <div class="sustain-list">
+      <div class="si">
+        <div class="si-icon">🌿</div>
+        <div>
+          <h3 class="si-title" id="s1-title">Växtbaserade ingredienser</h3>
+          <p class="si-text" id="s1-text">Inga animaliska produkter. Enkel, transparent sammansättning med råvaror du känner igen.</p>
+        </div>
+      </div>
+      <div class="si">
+        <div class="si-icon">🌊</div>
+        <div>
+          <h3 class="si-title" id="s2-title">Kelp för haven</h3>
+          <p class="si-text" id="s2-text">Kelp är ett superfood för hundar och en av världens mest hållbara råvaror – odlas utan sötvatten, gödsel eller mark och hjälper till att rena haven.</p>
+        </div>
+      </div>
+      <div class="si">
+        <div class="si-icon">🍎</div>
+        <div>
+          <h3 class="si-title" id="s3-title">Räddade råvaror</h3>
+          <p class="si-text" id="s3-text">Vi utforskar möjligheten att använda räddade äpplen och andra råvaror som annars skulle gå till spillo. Varje ingrediens har en historia.</p>
+        </div>
+      </div>
+      <div class="si">
+        <div class="si-icon">📦</div>
+        <div>
+          <h3 class="si-title" id="s4-title">Hållbar förpackning</h3>
+          <p class="si-text" id="s4-text">Vi jobbar mot komposterbara och miljövänliga förpackningslösningar som matchar vår hållbarhetsprofil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sustain-visual">
+    <svg width="300" height="300" viewBox="0 0 300 300">
+      <circle cx="150" cy="150" r="140" fill="rgba(212,135,58,0.05)" stroke="rgba(212,135,58,0.18)" stroke-width="1"/>
+      <circle cx="150" cy="150" r="105" fill="rgba(212,135,58,0.05)" stroke="rgba(212,135,58,0.14)" stroke-width="1"/>
+      <circle cx="150" cy="150" r="70" fill="rgba(212,135,58,0.1)" stroke="rgba(212,135,58,0.25)" stroke-width="1.5"/>
+      <text x="150" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#D4873A" opacity="0.85" font-style="italic">Handmade</text>
+      <text x="150" y="162" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#D4873A" opacity="0.85" font-style="italic">in Sweden</text>
+      <text x="150" y="180" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#7a6a52">since 2025</text>
+    </svg>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="f-brand">Simbibimbis</div>
+    <p class="f-tagline" id="f-tagline">"Life is short. Treat your dog with kindness." – Handgjort växtbaserat hundgodis från Sverige, med hjärtat på rätt ställe.</p>
+  </div>
+  <div>
+    <p class="f-head" id="f-nav">Navigera</p>
+    <ul class="f-links">
+      <li><a href="#produkt" id="f-l1">Produkter</a></li>
+      <li><a href="#story" id="f-l2">Vår historia</a></li>
+      <li><a href="#rescue" id="f-l-rescue">Rescue</a></li>
+      <li><a href="#hallbarhet" id="f-l3">Hållbarhet</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="f-head" id="f-contact">Kontakt</p>
+    <ul class="f-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">TikTok</a></li>
+      <li><a href="#"><span class="__cf_email__" data-cfemail="fd959897bd8e94909f949f94909f948ed38e98">[email&#160;protected]</span></a></li>
+      <li><a href="#" id="f-l4">Frakt &amp; retur</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="f-bottom">
+  <span id="f-copy">© 2025 Simbibimbis. Alla rättigheter förbehållna.</span>
+  <span>Handmade in Stockholm 🐾</span>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var translations = {
+  sv: {
+    'hero-title': '<em>Treat your dog<br>with kindness.</em>',
+    'hero-sub': 'Växtbaserat hundgodis – handgjort i Stockholm med hjärtat på rätt ställe.',
+    'hero-btn1': 'Shoppa The Good Staff',
+    'hero-btn2': 'Vår historia',
+    'hero-eyebrow': 'Handmade in Stockholm &middot; Växtbaserat &middot; 100% Good Staff',
+    'hero-badge': '5 kr per såld påse går till rescueorganisationer',
+    'prod-price-note': '80g &middot; inkl. moms<br>Frakt tillkommer',
+    'tag-hypo': 'Hypoallergent',
+    'v4-title': 'Ger tillbaka',
+    'v4-text': '5 kronor från varje såld påse går direkt till rescueorganisationer. Varje köp gör skillnad på riktigt.',
+    'nav-produkter': 'Produkter',
+    'nav-historia': 'Vår historia',
+    'nav-rescue': 'Rescue',
+    'nav-hallbarhet': 'Hållbarhet',
+    'nav-handla': 'Handla nu',
+    'story-label': 'Vår historia',
+    'story-title': 'Det började med<br><em>en liten strandhund</em>',
+    'story-p1': 'Angelica mötte henne i Goa, Indien – en liten gathund som togs om hand av ett lokalt djurskydd. Hon kallade henne Lillstrumpa. Hon kunde inte ta med henne hem, och det krossade hennes hjärta. Så hon lovade sig själv att försöka göra så mycket hon kan för att hjälpa rescuehundar.',
+    'story-p2': 'År senare träffade hon Niki. De insåg snabbt att de båda var vegetarianer som delade kärleken till hundar – och framför allt rescuehundar. De bestämde sig snart för att de ville adoptera en hund tillsammans.',
+    'story-p2b': 'På Alla hjärtans dag, sex månader efter att Angelica och Niki träffades, fick de samtalet: de hade blivit utvalda att adoptera en sex månader gammal valp. Och på något sätt föll allt på plats. De döpte om honom till Simba – deras lilla lejon, deras hjärta.',
+    'story-p2c': 'Niki bidrar med sin egen kreativitet i allt han gör. Tillsammans är de ett team byggt på kärlek, musik, matlagning och en gemensam övertygelse om att omtanke spelar roll. Och Simba? Alltid med dem – helst i en soffa eller på en stol bredvid.',
+    'story-p3': 'Simba är en amstaff-blandning. En ras – och en hel familj av bullhundar – som ofta missförstås. Men när de möts med kärlek och omsorg visar de upp något alldeles extraordinärt. Det är därför vi kallar vår produktlinje The Good Staff – för det är precis vad de är. Simbibimbis finns till för att visa världen vilka otroliga hundar de är.',
+    'story-p4': 'Simbibimbis är resultatet av den gemensamma övertygelsen. Ett varumärke byggt på kärlek till hundar, hållbara val och viljan att göra verklig skillnad – en påse i taget. Och det är därför Simbibimbis finns.',
+    'simba-caption': 'En rescuehund från Irland, oändligt älskad i sitt forever home i Stockholm och VD för Simbibimbis.',
+    'val-label': 'Varför Simbibimbis',
+    'val-title': 'Mer än bara hundgodis',
+    'v1-title': '100% växtbaserat',
+    'v1-text': 'Inga animaliska ingredienser. Godis som är bra för din hund och i linje med ett mer hållbart val.',
+    'v2-title': 'Handgjort i Stockholm',
+    'v2-text': 'Små batcher, noggrant utvalda ingredienser och full kontroll över hela processen.',
+    'v3-title': 'Hållbara råvaror',
+    'v3-text': 'Vi utforskar ingredienser som kelp – nyttigt för hundar och bra för haven – och räddade äpplen som annars skulle gå till spillo.',
+    'prod-label': 'Vår produkt',
+    'prod-title': 'The Good Staff<br><em>Gentle Hearts</em>',
+    'prod-desc': 'The Good Staff är ett växtbaserat, hypoallergent hundgodis framtaget för vardagsnjutning – och särskilt lämpligt för hundar med känslig mage eller allergi mot animaliska proteiner.<br><br>Som komplement till din hunds vanliga kost erbjuder det ett skonsamt och näringsrikt alternativ. Naturligt rikt på fiber och antioxidanter – för en balanserad och hälsosam livsstil.<br><br>Och viktigast av allt: hundarna älskar det. Simba äter inte uteslutande växtbaserat, men han älskar The Good Staff. Det är för oss det bästa beviset på att produkten håller vad den lovar.',
+    'ing-label': 'Ingredienser',
+    'ing1': 'Havre',
+    'ing2': 'Kikärtsmjöl',
+    'ing3': 'Jordnötssmör',
+    'ing4': 'Kokosolja',
+    'ing5': 'Naturliga smakgivare',
+    'prod-btn': 'Köp nu – 109 kr',
+    'resc-label': 'Rescue-engagemang',
+    'resc-title': 'Rescue<br><em>Friends Club</em>',
+    'resc-sub': 'Varje månad lyfter vi fram en rescuehund – antingen en som redan hittat sitt forever home, eller en som fortfarande väntar. Vi berättar deras historia och donationen går direkt till organisationen bakom.',
+    'rc1-title': 'En hund. En historia.',
+    'rc1-text': 'Vi presenterar en rescuehund med en positiv historia – en hund som klarade det och hittade sitt för alltid-hem.',
+    'rc2-title': '5 kr per påse',
+    'rc2-text': '5 kr per såld påse går direkt till den organisation som räddade den hunden – och som fortsätter kämpa för de hundar som väntar.',
+    'rc3-title': 'Köp med mening',
+    'rc3-text': 'Varje påse du köper är ett direkt bidrag till en verklig organisation och en verklig historia. Inte diffus välgörenhet – utan ett konkret och positivt bidrag.',
+    'sust-label': 'Hållbarhet',
+    'sust-title': 'Varje val<br><em>har ett syfte</em>',
+    's1-title': 'Växtbaserat',
+    's1-text': 'Inga animaliska ingredienser. Ett medvetet val för djuren och planeten.',
+    's2-title': 'Kelp – framtidens ingrediens',
+    's2-text': 'Kelp är ett superfood för hundar och en av världens mest hållbara ingredienser – odlad utan sötvatten, gödningsmedel eller mark, och hjälper till att rena haven.',
+    's3-title': 'Lokalt producerat',
+    's3-text': 'Handgjort i Stockholm i små batcher. Kort transportväg, full kontroll och stöd till lokal produktion.',
+    's4-title': 'Förpackning',
+    's4-text': 'Vi arbetar mot komposterbara och miljövänliga förpackningslösningar som matchar vår hållbarhetsprofil.',
+    'f-tagline': '"Treat your dog with kindness." – Handgjort växtbaserat hundgodis från Sverige.',
+    'f-nav': 'Navigera',
+    'f-l1': 'Produkter',
+    'f-l2': 'Vår historia',
+    'f-l3': 'Hållbarhet',
+    'f-l4': 'Frakt & retur',
+    'f-l-rescue': 'Rescue',
+    'f-contact': 'Kontakt',
+    'amstaff-note': 'Simba är en amstaff-blandning – en ras som ofta missförstås och behandlas orättvist – men när de möts med kärlek och omsorg visar de upp något alldeles extraordinärt. Det är därför produktlinjen heter The Good Staff – för det är precis vad de är.',
+    'f-copy': '© 2025 Simbibimbis. Alla rättigheter förbehållna.'
+  },
+  en: {
+    'hero-title': '<em>Treat your dog<br>with kindness.</em>',
+    'hero-sub': 'Plant-based dog treats – handmade in Stockholm.',
+    'hero-btn1': 'Shop The Good Staff',
+    'hero-btn2': 'Our story',
+    'hero-eyebrow': 'Handmade in Stockholm &middot; Plant-based &middot; 100% Good Staff',
+    'hero-badge': '5 SEK per bag goes to rescue organisations',
+    'prod-price-note': '80g &middot; incl. VAT<br>Shipping not included',
+    'tag-hypo': 'Hypoallergenic',
+    'v4-title': 'Giving back',
+    'v4-text': '5 SEK from every bag sold goes directly to rescue organisations. Every purchase makes a real difference.',
+    'nav-produkter': 'Products',
+    'nav-historia': 'Our story',
+    'nav-rescue': 'Rescue',
+    'nav-hallbarhet': 'Sustainability',
+    'nav-handla': 'Shop now',
+    'story-label': 'Our story',
+    'story-title': 'It started with<br><em>a little beach dog</em>',
+    'story-p1': 'Angelica met her in Goa, India – a little stray dog cared for by a local animal shelter. She called her Lillstrumpa. She couldn&#39;t bring her home, and it broke her heart. So she made a promise to herself: to try to do as much as she possibly can to help rescue dogs.',
+    'story-p2': 'Years later she met Niki. They quickly realised they were both vegetarians who shared a love of dogs – and especially rescue dogs. They soon decided they wanted to adopt a dog together.',
+    'story-p2b': 'On Valentine&#39;s Day, six months after Angelica and Niki first met, they got the call: they had been chosen to adopt a six month old puppy. And somehow, everything fell into place. They named him Simba – their little lion, their heart.',
+    'story-p2c': 'Niki brings his own creativity to everything he does. Together they are a team built on love, music, cooking and a shared conviction that kindness matters. And Simba? Always with them – preferably on a sofa or a chair next to them.',
+    'story-p3': 'Simba is an Amstaff mix. A breed – and a whole family of bull breeds – that is often misunderstood. But when met with love and care they show something truly extraordinary. That is why we call our product line The Good Staff – because that is exactly what they are. Simbibimbis exists to show the world what incredible dogs they are.',
+    'story-p4': 'Simbibimbis is the result of that shared conviction. A brand built on love for dogs, sustainable choices and the desire to make a real difference – one bag at a time. And that is why Simbibimbis exists.',
+    'simba-caption': 'A rescue dog from Ireland, endlessly loved in his forever home in Stockholm and CEO of Simbibimbis.',
+    'val-label': 'Why Simbibimbis',
+    'val-title': 'More than just dog treats',
+    'v1-title': '100% plant-based',
+    'v1-text': 'No animal ingredients. Treats that are good for your dog and in line with a more sustainable choice.',
+    'v2-title': 'Handmade in Stockholm',
+    'v2-text': 'Small batches, carefully selected ingredients and full control over the entire process.',
+    'v3-title': 'Sustainable ingredients',
+    'v3-text': 'We explore ingredients like kelp – great for dogs and good for the oceans – and rescued apples that would otherwise go to waste.',
+    'prod-label': 'Our product',
+    'prod-title': 'The Good Staff<br><em>Gentle Hearts</em>',
+    'prod-desc': 'The Good Staff is a plant-based, hypoallergenic dog treat made for everyday enjoyment – and especially suitable for dogs with sensitive digestion or allergies to animal proteins.<br><br>As a complement to your dog\'s regular diet, it offers a gentle and nourishing alternative. Naturally rich in fiber and antioxidants, it supports a balanced and healthy lifestyle.<br><br>And most importantly – dogs love it. Simba doesn\'t eat exclusively plant-based, but he loves The Good Staff. To us, that\'s the best proof that the product truly delivers on its promise.',
+    'ing-label': 'Ingredients',
+    'ing1': 'Oats',
+    'ing2': 'Chickpea flour',
+    'ing3': 'Peanut butter',
+    'ing4': 'Coconut oil',
+    'ing5': 'Natural flavourings',
+    'prod-btn': 'Buy now – 109 SEK',
+    'resc-label': 'Rescue commitment',
+    'resc-title': 'Rescue<br><em>Friends Club</em>',
+    'resc-sub': 'Every month we highlight a rescue dog – either one who has already found their forever home, or one who is still waiting. We tell their story and the donation goes directly to the organisation behind them.',
+    'rc1-title': 'One dog. One story.',
+    'rc1-text': 'We feature a rescue dog with a positive story – a dog who made it and found their forever home.',
+    'rc2-title': '5 SEK per bag',
+    'rc2-text': '5 SEK per bag sold goes directly to the organisation that rescued that dog – and who keeps fighting for the dogs still waiting.',
+    'rc3-title': 'Buy with meaning',
+    'rc3-text': 'Every bag you buy is a direct contribution to a real organisation and a real story. Not vague charity – a concrete and positive contribution.',
+    'sust-label': 'Sustainability',
+    'sust-title': 'Every choice<br><em>has a purpose</em>',
+    's1-title': 'Plant-based',
+    's1-text': 'No animal ingredients. A conscious choice for animals and the planet.',
+    's2-title': 'Kelp – the ingredient of the future',
+    's2-text': 'Kelp is a superfood for dogs and one of the world&#39;s most sustainable ingredients – grown without fresh water, fertiliser or land, and helping to clean the oceans.',
+    's3-title': 'Locally produced',
+    's3-text': 'Handmade in Stockholm in small batches. Short transport, full control and support for local production.',
+    's4-title': 'Packaging',
+    's4-text': 'We work towards compostable and eco-friendly packaging solutions that match our sustainability profile.',
+    'f-tagline': '"Treat your dog with kindness." – Handmade plant-based dog treats from Sweden.',
+    'f-nav': 'Navigate',
+    'f-l1': 'Products',
+    'f-l2': 'Our story',
+    'f-l3': 'Sustainability',
+    'f-l4': 'Shipping & returns',
+    'f-l-rescue': 'Rescue',
+    'f-contact': 'Contact',
+    'amstaff-note': 'Simba is an Amstaff mix – a breed often misunderstood and treated unfairly – but when met with love and care they show something truly extraordinary. That is why the product line is called The Good Staff – because that is exactly what they are.',
+    'f-copy': '© 2025 Simbibimbis. All rights reserved.'
+  }
+};
+
+function setLang(lang) {
+  var btns = document.querySelectorAll('.lang-btn');
+  btns[0].classList.toggle('active', lang === 'sv');
+  btns[1].classList.toggle('active', lang === 'en');
+  var t = translations[lang];
+  for (var id in t) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = t[id];
+  }
+  document.documentElement.lang = lang;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('btn-sv').addEventListener('click', function() { setLang('sv'); });
+  document.getElementById('btn-en').addEventListener('click', function() { setLang('en'); });
+  setLang('en');
+});
+</script>
+</body>
+</html>
